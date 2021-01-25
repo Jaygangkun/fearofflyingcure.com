@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Hotel Obama</title>
+<meta charset="utf-8">
+ 
+<script type="text/javascript" src="http://www.curefearofflying.com/capcha_form/js/jquery-1.6.min.js" ></script>
+ 
+ <script type="text/javascript">
+
+$(document).ready(function() {
+// Contact Form
+$('input').keyup(function(){ $(this).removeClass('red_input'); });
+$('textarea').keyup(function(){ $(this).removeClass('red_input'); });
+$('select').change(function(){ $(this).removeClass('red_input'); });
+
+
+$('#submit').click(function() {
+   var name = $('#company3').val();
+   var email = $('#name2').val();
+   var phone = $('#phone').val();
+   var message = $('textarea.textarea').val();
+   var check_captcha = $('#check_captcha').val();
+   var error_msg ='';
+   if(name==''){ var error_msg ='Please enter your First Name. \r\n'; $('#company3').addClass('red_input'); }
+   if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email))) {
+	 error_msg +='Please Enter Valid Email Address. \r\n'; $('#name2').addClass('red_input'); 
+   }
+   if(phone==''){ var error_msg = error_msg + 'Please enter valid Phone Number. \r\n'; $('#phone').addClass('red_input'); } 
+   if(message==''){ var error_msg = error_msg + 'Please enter Comment/Message. \r\n'; $('textarea.textarea').addClass('red_input'); }
+   if(check_captcha==''){ var error_msg = error_msg + 'Please enter Security code. \r\n'; $('#check_captcha').addClass('red_input'); }
+	    
+   if(error_msg!='') {
+   alert(error_msg);
+   return false;
+   } else{
+		  var action = $('form#contact_form_cap').attr("action"); 
+		  dataString = $('form#contact_form_cap').serialize();
+		  $.ajax({	 
+		  type: "POST",  
+		  url: action,  
+		  data: dataString,
+		  dataType: "json",
+		  success: function(data){
+				  if(data.response=='invalid') {					  
+					  alert(data.comment);
+				  }				  
+				  if(data.response=='error') {					  
+					  alert(data.comment);  
+				  }
+				  if(data.response=='success') {
+					  $('form#contact_form_cap').hide();
+					 $('div.download-box').show();
+					 
+					 
+				  }
+				  
+		  },
+		  error: function(){				
+			alert('Opps somthing gores wrong'); 
+		  }
+	  });
+   }   
+        
+});
+							   
+});
+
+
+
+
+$(function() {
+	$('#defaultReal').realperson();
+});
+</script>
+</head>
+<body id="page5">
+<div class="indent"></div>
+<div class="box">
+  <!-- header -->
+  
+  <!-- content -->
+  <section id="content">
+    <div class="container_24">
+      <div class="wrapper">
+         
+        <div class="grid_14">
+          <h2 class="h2-top">get in touch</h2>
+          <div class="border border-top1"></div>
+          <div id="contact_form">
+            <div class="download-box" style="display:none;"> Contact form submitted!</br>
+              <b>We will be in touch soon.</b> </div>
+            <div class="clear"></div>
+            <form action="contact-captcha.php" id="contact_form_cap" class="formLayout" >
+              <label>Name:<span class="style2"> * </span> </label>
+              <input type="text" id="company3" name="name" />
+              <br />
+              <label> Email:<span class="style2"> * </span> </label>
+              <input type="text" id="name2" name="email" />
+              <br />
+              <label> Phone Number:<span class="style2"> * </span> </label>
+              <input type="text" id="phone" name="phone" />
+              <br />
+              <label>Message:<span class="style2"> * </span> </label>
+              <textarea  name="message" cols="" rows="" class="textarea" ></textarea>
+              <div class="clear"></div>
+              
+              
+              
+              <div id="capctha-field"> <img src="captcha.php" id="captcha"  /><br>
+                <a href="javascript:void(0);" onClick="
+              document.getElementById('captcha').src='captcha.php?'+Math.random();
+              document.getElementById('captcha-form').focus();"
+              id="change-image"> Try another text</a> </div>
+              
+              
+              <input name="check_captcha" id="check_captcha" type="text"  />
+              <div class="clear"></div>
+              <input name="submit" type="button" value="submit"  id="submit" />
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="border border-pad7"></div>
+    </div>
+  </section>
+  <!-- footer -->
+  
+  <div class="bg"></div>
+</div>
+<div class="indent1"></div>
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>

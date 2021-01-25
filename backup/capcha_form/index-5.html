@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Hotel Obama</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/grid.css" type="text/css" media="screen">
+<script type="text/javascript" src="js/jquery-1.6.min.js" ></script>
+<!--[if lt IE 7]> 
+ 		<div style=' clear: both; text-align:center;  padding:0 0 0 0px; position: relative;'>
+			<a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg"  border="0" height="42" width="820" alt="You are using an outdated browser. For a  faster, safer browsing experience, upgrade for free today. /></a>
+		</div> 
+  <![endif]-->
+<!--[if lt IE 9]> 
+        <script type="text/javascript" src="js/html5.js"></script>
+    <![endif]-->
+<script type="text/javascript" src="jquery.realperson.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+// Contact Form
+$('input').keyup(function(){ $(this).removeClass('red_input'); });
+$('textarea').keyup(function(){ $(this).removeClass('red_input'); });
+$('select').change(function(){ $(this).removeClass('red_input'); });
+
+
+$('#submit').click(function() {
+   var name = $('#company3').val();
+   var email = $('#name2').val();
+   var phone = $('#phone').val();
+   var message = $('textarea.textarea').val();
+   var check_captcha = $('#check_captcha').val();
+   var error_msg ='';
+   if(name==''){ var error_msg ='Please enter your First Name. \r\n'; $('#company3').addClass('red_input'); }
+   if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email))) {
+	 error_msg +='Please Enter Valid Email Address. \r\n'; $('#name2').addClass('red_input'); 
+   }
+   if(phone==''){ var error_msg = error_msg + 'Please enter valid Phone Number. \r\n'; $('#phone').addClass('red_input'); } 
+   if(message==''){ var error_msg = error_msg + 'Please enter Comment/Message. \r\n'; $('textarea.textarea').addClass('red_input'); }
+   if(check_captcha==''){ var error_msg = error_msg + 'Please enter Security code. \r\n'; $('#check_captcha').addClass('red_input'); }
+	    
+   if(error_msg!='') {
+   alert(error_msg);
+   return false;
+   } else{
+		  var action = $('form#contact_form_cap').attr("action"); 
+		  dataString = $('form#contact_form_cap').serialize();
+		  $.ajax({	 
+		  type: "POST",  
+		  url: action,  
+		  data: dataString,
+		  dataType: "json",
+		  success: function(data){
+				  if(data.response=='invalid') {					  
+					  alert(data.comment);
+				  }				  
+				  if(data.response=='error') {					  
+					  alert(data.comment);  
+				  }
+				  if(data.response=='success') {
+					  $('form#contact_form_cap').hide();
+					 $('div.download-box').show();
+					 
+					 
+				  }
+				  
+		  },
+		  error: function(){				
+			alert('Opps somthing gores wrong'); 
+		  }
+	  });
+   }   
+        
+});
+							   
+});
+
+
+
+
+$(function() {
+	$('#defaultReal').realperson();
+});
+</script>
+</head>
+<body id="page5">
+<div class="indent"></div>
+<div class="box">
+  <!-- header -->
+  <header>
+    <div class="container_24">
+      <div class="row1">
+        <div class="extra-wrap">
+          <h1><a href="index.html">modern hotel</a></h1>
+          <nav>
+            <ul class="sf-menu">
+              <li><a href="index.html">About Hotel</a></li>
+              <li><a href="index-1.html">Services</a> </li>
+              <li><a href="index-3.html">Booking</a></li>
+              <li><a href="index-4.html">Photo Gallery</a></li>
+              <li class="active"><a href="index-5.html">Location</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="clear"></div>
+        <div class="border"></div>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <section id="content">
+    <div class="container_24">
+      <div class="wrapper">
+        <div class="grid_7 alpha suffix_1">
+          <h2 class="h2-top">contact info</h2>
+          <div class="border border-top1"></div>
+          <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com.gh/maps?hl=en&amp;safe=off&amp;q=hotel+obama+ghana&amp;ie=UTF8&amp;hq=hotel+obama+ghana&amp;hnear=&amp;t=m&amp;cid=8324548644600094542&amp;f=d&amp;daddr=Hotel+Obama,+110+Liberation+Link,+Accra+00233&amp;geocode=%3BCXvz9NG7B1izFbCvVAAd6LH8_ylRLNs4sJDfDzFOH9kM47yGcw&amp;ll=5.550381,-0.219727&amp;spn=3.826482,4.669189&amp;output=embed"></iframe>
+          <dl>
+            <dt class="dt-bot"><strong>Hotel Obama</strong><br>
+              5 Lagos Lane,<br>
+              East Legon, Accra,<br>
+              Ghana.</dt>
+            <dd><span>Freephone:</span>+233-302-500577</dd>
+            <dd><span>Telephone:</span>+233-302-500577</dd>
+            <dd class="color">E-mail:<a href="mailto:hotelobamaghana@gmail.com" target="_blank">hotelobamaghana@gmail.com</a></dd>
+          </dl>
+        </div>
+        <div class="grid_14">
+          <h2 class="h2-top">get in touch</h2>
+          <div class="border border-top1"></div>
+          <div id="contact_form">
+            <div class="download-box" style="display:none;"> Contact form submitted!</br>
+              <b>We will be in touch soon.</b> </div>
+            <div class="clear"></div>
+            <form action="contact-captcha.php" id="contact_form_cap" class="formLayout" >
+              <label>Name:<span class="style2"> * </span> </label>
+              <input type="text" id="company3" name="name" />
+              <br />
+              <label> Email:<span class="style2"> * </span> </label>
+              <input type="text" id="name2" name="email" />
+              <br />
+              <label> Phone Number:<span class="style2"> * </span> </label>
+              <input type="text" id="phone" name="phone" />
+              <br />
+              <label>Message:<span class="style2"> * </span> </label>
+              <textarea  name="message" cols="" rows="" class="textarea" ></textarea>
+              <div class="clear"></div>
+              
+              
+              
+              <div id="capctha-field"> <img src="captcha.php" id="captcha"  /><br>
+                <a href="javascript:void(0);" onClick="
+              document.getElementById('captcha').src='captcha.php?'+Math.random();
+              document.getElementById('captcha-form').focus();"
+              id="change-image"> Try another text</a> </div>
+              
+              
+              <input name="check_captcha" id="check_captcha" type="text"  />
+              <div class="clear"></div>
+              <input name="submit" type="button" value="submit"  id="submit" />
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="border border-pad7"></div>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer>
+    <div class="container_24">
+      <div class="wrapper">
+        <div class="foot-text">Hotel obama &copy; 2013 | <a href="index-6.html">Privacy policy</a></div>
+        <ul class="link-img">
+          <li><a class="tooltip img1" title="google+" href="#"></a></li>
+          <li><a class="tooltip img2" title="Twitter" href="#"></a></li>
+          <li><a class="tooltip img3" title="Ember" href="#"></a></li>
+          <li><a class="tooltip img4" title="Delicious" href="#"></a></li>
+        </ul>
+      </div>
+      <!-- {%FOOTER_LINK} -->
+    </div>
+  </footer>
+  <div class="bg"></div>
+</div>
+<div class="indent1"></div>
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>

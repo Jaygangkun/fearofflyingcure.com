@@ -1,0 +1,30 @@
+<?php
+error_reporting(0);
+session_start();
+
+
+
+
+	if ($_POST['check_captcha']!= $_SESSION['captcha']) {
+		
+	   echo '{"response":"invalid","comment":"Invalide Security Code"}';
+	   
+	} else{
+		
+$to = "maria@creativeonemedia.com"; //sender mail id
+$subject="Contact Form";   // subject of mail
+$body = "Contact us \n\n\n". //custom messge change here
+"Name: ".$_POST[name]." \n".
+"Phone: ".$_POST[phone]." \n".
+"Email: ".$_POST[email]." \n".
+"Comments: ".$_POST[msg]." \n";
+
+$email=$_POST[email];  //email id of visitoe
+$headers = "From: $email \r\n"; 
+$headers .= "Reply-To: $email \r\n";
+mail($to, $subject, $body,$headers);  //mail function
+header("location: thanks.html");  //link to redirect page 
+
+}
+
+?>
